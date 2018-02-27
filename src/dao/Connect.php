@@ -8,9 +8,10 @@ class Connect {
     private $pdo;
 
     private function __construct() {
-        $this->pdo = new \PDO('mysql:host='.$_ENV['SQL_HOST'].';dbname='.$_ENV['SQL_DATABASE'].';',
-        $_ENV['SQL_USER'],
-        $_ENV['SQL_PASSWORD']);
+        $this->pdo = new \PDO('mysql:host=myhost;dbname=kdoquero_db', 'kdoquero', 'kdoquero');
+        // $this->pdo = new \PDO('mysql:host='.$_ENV['SQL_HOST'].';dbname='.$_ENV['SQL_DATABASE'].';',
+        // $_ENV['SQL_USER'],
+        // $_ENV['SQL_PASSWORD']);
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
     }
