@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+        body {
+            background: #434A54;
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            margin: 10px;
+            width: 400px;
+        }
+
+        .container-row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            border: solid 1px rgb(168, 160, 160);
+            position: relative;
+            width: 500px;
+            padding: 50px;
+            margin: 10px auto;
+            background-color: #fff;
+            -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .box:before,
+        .box:after {
+            position: absolute;
+            width: 40%;
+            height: 10px;
+            content: ' ';
+            left: 12px;
+            bottom: 12px;
+            background: transparent;
+            -webkit-transform: skew(-5deg) rotate(-5deg);
+            -moz-transform: skew(-5deg) rotate(-5deg);
+            -ms-transform: skew(-5deg) rotate(-5deg);
+            -o-transform: skew(-5deg) rotate(-5deg);
+            transform: skew(-5deg) rotate(-5deg);
+            -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        .box:after {
+            left: auto;
+            right: 12px;
+            -webkit-transform: skew(5deg) rotate(5deg);
+            -moz-transform: skew(5deg) rotate(5deg);
+            -ms-transform: skew(5deg) rotate(5deg);
+            -o-transform: skew(5deg) rotate(5deg);
+            transform: skew(5deg) rotate(5deg);
+        }
+
+        .box h1 {
+            margin: 0 0 10px 0;
+            padding: 0 0 10px 0;
+            border-bottom: 1px solid #D8D8D8;
+            font-size: 18px;
+            text-transform: uppercase;
+            font-weight: normal;
+        }
+
+        .box intro {
+            display: block;
+            font-style: italic;
+            color: #666;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .box content p {
+            font-size: 13px;
+            text-align: left;
+        }
+
+        .container-table {
+            display: table;
+        }
+
+        .container-table>* {
+            display: table-cell;
+            vertical-align: top;
+        }
+        h1 {
+            color: #719e40;
+            letter-spacing: -3px;
+            font-family: 'Lato', sans-serif;
+            font-size: 100px;
+            font-weight: 200;
+            margin-bottom: 0;
+        }
+    </style>
+    <title>{{user.username}} blog</title>
+</head>
+
+<body>
+    <a href="{{path_for('index')}}">back to index</a>
+    <header>
+        <h1 class="text-center">Hello {{user.username}} </h1>
+        <a href="{{path_for('update',{ 'id': user.id, 'name': name })}}">
+            <span>edit</span>
+        </a>
+
+    </header>
+
+
+
+
+    <form action="{{path_for('userblog',{ 'id': user.id, 'name': name })}}" method="POST">
+        <div class="form-group row">
+            <label for="title" class="col-2 col-form-label text-center">Title</label>
+            <div class="col-8">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-institution"></i>
+                    </div>
+                    <input id="title" name="title" placeholder="title of your article" type="text" required="required" class="form-control here">
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="content" class="col-2 col-form-label text-center ">Content</label>
+            <div class="col-8">
+                <textarea id="content" name="content" placeholder="text of your article..." cols="40" rows="10" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-4 col-8">
+                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+
+    <section class="container-row">
+        {% for article in articles %}
+        <div class="box">
+            <h1></h1>
+            <article>
+                <content>
+                    <p>{{article.title}}</p>
+                    <p>{{article.content}}</p>
+                    <p>{{article.date | date('j-m-Y H:i:s',"Europe/Paris")}}</p>
+                    <a href="{{path_for('updateArt',{ 'idArt': article.id })}}">update</a>
+                    <a href="{{path_for('delete',{ 'idArt': article.id })}}">delete</a>
+                </content>
+            </article>
+        </div>
+        {% endfor %}
+    </section>
+
+</body>
+
+</html>
